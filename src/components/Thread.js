@@ -4,6 +4,7 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
 
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -29,24 +30,21 @@ const bull = (
 const Thread = ({title,text}) => {
 
     const [pick,setPick]=React.useState('');
+    const [postTitle,setPostTitle]=React.useState('');
     const [picked,setPicked]=React.useState(false);
     const navigate = useNavigate();
-    const [passengers,setPassengers] = React.useState([1]);
+
     const handlePick = () => {
 
         setPicked(!picked);
         //navigate('/passenger2');
     }
 
-    const addPassenger = () =>{
-        setPassengers(passengers.concat(1));
-    }
+   const handlePostTitle = (e) => {
+    setPostTitle(e.target.value);
+   }
 
-    const removePassenger = () => {
-        if(passengers.length!=1){
-            setPassengers(passengers. slice(0, -1));
-        }
-    }
+
   return (
     <>
         <Card sx={{ minWidth: 175 }} variant="outlined" onClick={handlePick}>
@@ -64,15 +62,10 @@ const Thread = ({title,text}) => {
                 <Box sx={{ width: '100%' }}>
                     <Box sx={{ borderTop:2, borderBottom: 2, borderColor: 'divider', bgcolor:'#f5f5f5' }}>
                         <FormControl sx={{m: 3, top:5,  minWidth: 120 }} >
-                            <Button id="add" variant="contained" onClick={addPassenger} >
-                                Add a passenger
-                            </Button>
+                             <TextField id="title" label="Title" variant="outlined" onChange={handlePostTitle}/>
+                             <FormHelperText>Please define the title of the post.</FormHelperText>
                         </FormControl>
-                        <FormControl sx={{m: 3, top:5,  minWidth: 120 }} >
-                            <Button id="remove" variant="contained" onClick={removePassenger} >
-                                Remove a passenger
-                            </Button>
-                        </FormControl>
+
 
 
                     </Box>
