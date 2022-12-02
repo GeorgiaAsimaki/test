@@ -159,7 +159,7 @@ const Thread = ({title,text}) => {
                              )}
 
                         </>
-                        {titleAdded && checkedTitle && (
+                        {titleAdded && checkedTitle && postTitle!='' && (
                             <FormControl sx={{m: 3, top:13,  minWidth: 120 }} >
                                 <Button id="create" variant="contained" onClick={addTitle} >
                                     Create POST.

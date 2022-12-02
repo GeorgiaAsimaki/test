@@ -4,13 +4,21 @@ const api = axios.create({
 });
 
 const post = {
-    postTitle : async(titlee) => {
+    postTitle : async (titlee) => {
 
         const response = await api.post(
             'checktitle',titlee, 
             {headers: {"Content-Type": "text/plain"}}
-            )
+        )
         return response.data;
+    },
+
+    postBody : async (bodyy) => {
+        const response1 = await api.post(
+            'checkwords',bodyy,
+            {headers: {"Content-Type": "text/plain"}}
+        )
+        return response1.data;
     },
 }
 
