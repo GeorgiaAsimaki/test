@@ -73,6 +73,7 @@ const Thread = ({title,text}) => {
         console.log(checked);
         
       }
+      addTitle(postTitle);
       setTitleAdded(true);
       
     }
