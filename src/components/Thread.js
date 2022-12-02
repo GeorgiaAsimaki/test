@@ -99,18 +99,18 @@ const Thread = ({title,text}) => {
     setCatAdded(true);
    }
 
+   const handleBodyWords = async (e) => {
 
+      setCheckedTitle(await APIService.post.postBody(body));
+      console.log(checked);
+    }
+    
+  
    const bodyCheck = (e) => {
 
-    if (e==='one'){
-        setErrorMessage(true);
-    }
-    else{
 
-        setErrorMessage(false);
-
-    }
-    setChecked(true);
+        setErrorMessage(handleBodyWords);
+   
    }
 
     const handleBody = (e) => {
