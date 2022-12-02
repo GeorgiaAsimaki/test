@@ -34,6 +34,22 @@ const Thread = ({title,text}) => {
     const [titleAdded,setTitleAdded]=React.useState(false);
     const [picked,setPicked]=React.useState(false);
     const [category,setCategory]=React.useState('');
+    const [body,setBody]=React.useState('');
+
+    const [images,setImages] = React.useState([]);
+    const [imageURLs,setImageURLs] = React.useState([]);
+
+    React.useEffect(()=>{
+        if(images.length<1) return;
+        const newImageUrls = [];
+        images.forEach(image=>newImageUrls.push(URL.createObjectURL(image)));
+        setImageURLs(newImageUrls);
+
+    },[images]);
+
+    const onImageChange = (e) => {
+        setImages([...e.target.files]);
+    }
 
 
     const navigate = useNavigate();
@@ -56,6 +72,9 @@ const Thread = ({title,text}) => {
     setCategory(e.target.value);
    }
 
+    const handleBody = (e) => {
+        setBody(e.target.value);
+    }
 
 
   return (
@@ -89,22 +108,32 @@ const Thread = ({title,text}) => {
                             <Box sx={{ width: '100%' }}>
                                 <Box sx={{ borderTop:2, borderBottom: 2, borderColor: 'divider', bgcolor:'#f5f5f5' }}>
                                     <FormControl sx={{m: 2, top:5,  minWidth: 120 }} >
-                                         <FormControl sx={{ m: 2,top:10, minWidth: 220 }}>
-                                               <InputLabel id="demo-simple-select-helper-label">Category</InputLabel>
-                                               <Select
-                                                 labelId="demo-simple-select-helper-label"
-                                                 id="category"
-                                                 value={1}
-                                                 label="Category"
-                                                 onChange={handleCategory}
-                                               >
-                                                 <MenuItem id="doubt" value={1}>{title} question </MenuItem>
-                                                 <MenuItem id="suggestion" value={2}>{title} suggestion </MenuItem>
-                                                 <MenuItem id="clarification" value={3}>{title} clarification </MenuItem>
-                                               </Select>
-                                               <FormHelperText>Choose Category.</FormHelperText>
-                                         </FormControl>
+                                       <InputLabel id="demo-simple-select-helper-label">Category</InputLabel>
+                                       <Select
+                                         labelId="demo-simple-select-helper-label"
+                                         id="category"
+                                         value={1}
+                                         label="Category"
+                                         onChange={handleCategory}
+                                       >
+                                         <MenuItem id="doubt" value={1}>{title} question </MenuItem>
+                                         <MenuItem id="suggestion" value={2}>{title} suggestion </MenuItem>
+                                         <MenuItem id="clarification" value={3}>{title} clarification </MenuItem>
+                                       </Select>
                                     </FormControl>
+
+                                    <FormControl sx={{m: 2, top:5,  minWidth: 120 }} >
+                                      <TextField id="body" label="Body" variant="outlined" onChange={handleBody}/>
+                                      <FormHelperText>Enter the body of the post.</FormHelperText>
+                                    </FormControl>
+
+                                    <FormControl sx={{m: 3, top:10,  minWidth: 120 }} >
+                                        <input type="file" multiple accept ="image/*" onChange={onImageChange} />
+                                        {imageURLs.map(imageSrc => <img src={imageSrc} />)}
+
+                                    </FormControl>
+
+
                                 </Box>
                             </Box>
                         )}
