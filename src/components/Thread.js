@@ -72,7 +72,7 @@ const Thread = ({title,text}) => {
     const handleTitle = async (e) => {
       setPostTitle(e.target.value);
       if(postTitle!=''){
-        setCheckedTitle(await APIService.post.postTitle(postTitle));
+        setCheckedTitle(await APIService.post.postTitle(e.target.value));
         console.log(checkedTitle);
       }
 

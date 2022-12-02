@@ -5,7 +5,7 @@ const api = axios.create({
 
 const post = {
     postTitle : async(titlee) => {
-      
+
         const response = await api.post(
             'checktitle',titlee, 
             {headers: {"Content-Type": "text/plain"}}
