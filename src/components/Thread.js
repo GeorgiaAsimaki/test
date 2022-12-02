@@ -31,7 +31,11 @@ const Thread = ({title,text}) => {
 
     const [pick,setPick]=React.useState('');
     const [postTitle,setPostTitle]=React.useState('');
+    const [titleAdded,setTitleAdded]=React.useState(false);
     const [picked,setPicked]=React.useState(false);
+    const [category,setCategory]=React.useState('');
+
+
     const navigate = useNavigate();
 
     const handlePick = () => {
@@ -43,6 +47,15 @@ const Thread = ({title,text}) => {
    const handlePostTitle = (e) => {
     setPostTitle(e.target.value);
    }
+
+   const addTitle = () => {
+    setTitleAdded(true);
+   }
+
+   const handleCategory = (e) => {
+    setCategory(e.target.value);
+   }
+
 
 
   return (
@@ -60,16 +73,46 @@ const Thread = ({title,text}) => {
         <>
            { picked && (
                 <Box sx={{ width: '100%' }}>
-                    <Box sx={{ borderTop:2, borderBottom: 2, borderColor: 'divider', bgcolor:'#f5f5f5' }}>
+                    <Box sx={{ borderTop:2, borderBottom: 2, borderColor: 'divider', bgcolor:'#FAF0F2' }}>
                         <FormControl sx={{m: 3, top:5,  minWidth: 120 }} >
                              <TextField id="title" label="Title" variant="outlined" onChange={handlePostTitle}/>
                              <FormHelperText>Please define the title of the post.</FormHelperText>
                         </FormControl>
-
-
-
+                        <FormControl sx={{m: 3, top:13,  minWidth: 120 }} >
+                            <Button id="addTitle" variant="contained" onClick={addTitle} >
+                                Create POST.
+                            </Button>
+                        </FormControl>
                     </Box>
+                    <>
+                        {titleAdded && (
+                            <Box sx={{ width: '100%' }}>
+                                <Box sx={{ borderTop:2, borderBottom: 2, borderColor: 'divider', bgcolor:'#f5f5f5' }}>
+                                    <FormControl sx={{m: 2, top:5,  minWidth: 120 }} >
+                                         <FormControl sx={{ m: 2,top:10, minWidth: 220 }}>
+                                               <InputLabel id="demo-simple-select-helper-label">Category</InputLabel>
+                                               <Select
+                                                 labelId="demo-simple-select-helper-label"
+                                                 id="category"
+                                                 value={1}
+                                                 label="Category"
+                                                 onChange={handleCategory}
+                                               >
+                                                 <MenuItem id="doubt" value={1}>{title} question </MenuItem>
+                                                 <MenuItem id="suggestion" value={2}>{title} suggestion </MenuItem>
+                                                 <MenuItem id="clarification" value={3}>{title} clarification </MenuItem>
+                                               </Select>
+                                               <FormHelperText>Choose Category.</FormHelperText>
+                                         </FormControl>
+                                    </FormControl>
+                                </Box>
+                            </Box>
+                        )}
+                    </>
+
                 </Box>
+
+
 
            )}
        </>
