@@ -73,7 +73,7 @@ const Thread = ({title,text}) => {
         console.log(checked);
         
       }
-      addTitle(postTitle);
+
       setTitleAdded(true);
       
     }
@@ -142,7 +142,7 @@ const Thread = ({title,text}) => {
                         </FormControl>
                         {titleAdded && (
                             <FormControl sx={{m: 3, top:13,  minWidth: 120 }} >
-                                <Button id="create" variant="contained" onKeyDown={addTitle} >
+                                <Button id="create" variant="contained" onClick={addTitle} >
                                     Create POST.
                                 </Button>
                             </FormControl>
