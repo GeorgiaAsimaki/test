@@ -21,7 +21,8 @@ import APIService from '../APIService';
 
 import {Routes, Route, useNavigate} from 'react-router-dom';
 
-import Post from './Post'
+import Post from './Post';
+import Switch from './Switch';
 
 const bull = (
   <Box
@@ -44,6 +45,9 @@ const Thread = ({title,text}) => {
     const [catAdded,setCatAdded] = React.useState(false);
     const [imgAdded,setImgAdded] = React.useState(false);
     const [create,setCreate] =  React.useState(false);
+
+    const [submit,setSubmit] =  React.useState(false);
+    const [value, setValue] = React.useState(false);
 
     const [errorMessage,setErrorMessage] = React.useState(false);
 
@@ -111,6 +115,9 @@ const Thread = ({title,text}) => {
         bodyCheck(e.target.value);
     }
 
+    const handleSubmit = () => {
+        setSubmit(true);
+    }
 
   return (
     <>
@@ -159,23 +166,36 @@ const Thread = ({title,text}) => {
                                        </Select>
                                     </FormControl>
 
-                                    <FormControl sx={{m: 2, top:5,  minWidth: 120 }} >
+                                    <FormControl sx={{m: 2, left:50,top:5,  minWidth: 120 }} >
                                       <TextField id="body" label="Body" variant="outlined" onChange={handleBody}/>
                                       <FormHelperText>Enter the body of the post.</FormHelperText>
                                     </FormControl>
 
-                                    <FormControl sx={{m: 3, top:10,  minWidth: 120 }} >
+                                    <FormControl sx={{m: 3, left:70,top:10,  minWidth: 20 }} >
                                         <input type="file" multiple accept ="image/*" onChange={onImageChange} />
                                     </FormControl>
 
                                         {checked && catAdded && imgAdded && (
                                             <>
                                             {!errorMessage && (
-                                                <FormControl sx={{m: 3, top:10,  minWidth: 120 }} >
-                                                    <Button id="submit" variant="contained"  >
+                                                <>
+                                                <FormControl sx={{m: 3,top:10,  minWidth: 120 }} >
+                                                    <Button id="submit" variant="contained"  onClick={handleSubmit}>
                                                         Submit POST.
                                                     </Button>
                                                 </FormControl>
+                                                    {submit && (
+                                                        <FormControl sx={{m: 2, left:50,top:10,  minWidth: 220 }}>
+                                                            <Switch isOn={value} handleToggle={() => {setValue(!value);}}/>
+                                                            {value && (
+                                                                <FormHelperText>Only for registered users</FormHelperText>
+                                                            )}
+                                                            {!value && (
+                                                                <FormHelperText>Public</FormHelperText>
+                                                            )}
+                                                        </FormControl>
+                                                    )}
+                                                </>
                                             )}
                                             {errorMessage && (
                                                 <FormControl sx={{m: 2, top:5,  minWidth: 120 }} >
@@ -189,6 +209,7 @@ const Thread = ({title,text}) => {
                                         )}
 
                                     <Post title={postTitle} category={category} body={body} img={imageURLs}></Post>
+
 
                                 </Box>
                             </Box>
