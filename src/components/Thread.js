@@ -18,6 +18,8 @@ import Stack from '@mui/material/Stack';
 
 import {Routes, Route, useNavigate} from 'react-router-dom';
 
+import Post from './Post'
+
 const bull = (
   <Box
     component="span"
@@ -35,6 +37,12 @@ const Thread = ({title,text}) => {
     const [picked,setPicked]=React.useState(false);
     const [category,setCategory]=React.useState('');
     const [body,setBody]=React.useState('');
+    const [checked,setChecked]=React.useState(false);
+    const [catAdded,setCatAdded] = React.useState(false);
+    const [imgAdded,setImgAdded] = React.useState(false);
+    const [create,setCreate] =  React.useState(false);
+
+    const [errorMessage,setErrorMessage] = React.useState(false);
 
     const [images,setImages] = React.useState([]);
     const [imageURLs,setImageURLs] = React.useState([]);
@@ -49,6 +57,7 @@ const Thread = ({title,text}) => {
 
     const onImageChange = (e) => {
         setImages([...e.target.files]);
+        setImgAdded(true);
     }
 
 
@@ -62,18 +71,35 @@ const Thread = ({title,text}) => {
 
    const handlePostTitle = (e) => {
     setPostTitle(e.target.value);
+    setTitleAdded(true);
    }
 
    const addTitle = () => {
-    setTitleAdded(true);
+    setCreate(true);
    }
 
    const handleCategory = (e) => {
     setCategory(e.target.value);
+    setCatAdded(true);
+   }
+
+
+   const bodyCheck = (e) => {
+    if (e==='one'){
+        setChecked(false);
+        setErrorMessage(true);
+    }
+    else{
+
+        setChecked(true);
+        setErrorMessage(false);
+
+    }
    }
 
     const handleBody = (e) => {
         setBody(e.target.value);
+        bodyCheck(e.target.value);
     }
 
 
@@ -92,33 +118,35 @@ const Thread = ({title,text}) => {
         <>
            { picked && (
                 <Box sx={{ width: '100%' }}>
-                    <Box sx={{ borderTop:2, borderBottom: 2, borderColor: 'divider', bgcolor:'#FAF0F2' }}>
+                    <Box sx={{ borderTop:2, borderBottom: 2, borderColor: 'divider', bgcolor:'#f5f5f5' }}>
                         <FormControl sx={{m: 3, top:5,  minWidth: 120 }} >
                              <TextField id="title" label="Title" variant="outlined" onChange={handlePostTitle}/>
                              <FormHelperText>Please define the title of the post.</FormHelperText>
                         </FormControl>
-                        <FormControl sx={{m: 3, top:13,  minWidth: 120 }} >
-                            <Button id="addTitle" variant="contained" onClick={addTitle} >
-                                Create POST.
-                            </Button>
-                        </FormControl>
+                        {titleAdded && (
+                            <FormControl sx={{m: 3, top:13,  minWidth: 120 }} >
+                                <Button id="create" variant="contained" onClick={addTitle} >
+                                    Create POST.
+                                </Button>
+                            </FormControl>
+                        )}
                     </Box>
                     <>
-                        {titleAdded && (
+                        {create && (
                             <Box sx={{ width: '100%' }}>
-                                <Box sx={{ borderTop:2, borderBottom: 2, borderColor: 'divider', bgcolor:'#f5f5f5' }}>
+                                <Box sx={{ borderTop:0, borderBottom: 1, borderColor: 'divider', bgcolor:'#FAF0F2' }}>
                                     <FormControl sx={{m: 2, top:5,  minWidth: 120 }} >
                                        <InputLabel id="demo-simple-select-helper-label">Category</InputLabel>
                                        <Select
                                          labelId="demo-simple-select-helper-label"
                                          id="category"
-                                         value={1}
+                                         value={category}
                                          label="Category"
                                          onChange={handleCategory}
                                        >
-                                         <MenuItem id="doubt" value={1}>{title} question </MenuItem>
-                                         <MenuItem id="suggestion" value={2}>{title} suggestion </MenuItem>
-                                         <MenuItem id="clarification" value={3}>{title} clarification </MenuItem>
+                                         <MenuItem id="doubt" value={'doubt'}>{title} question </MenuItem>
+                                         <MenuItem id="suggestion" value={'suggestion'}>{title} suggestion </MenuItem>
+                                         <MenuItem id="clarification" value={'clarification'}>{title} clarification </MenuItem>
                                        </Select>
                                     </FormControl>
 
@@ -129,10 +157,18 @@ const Thread = ({title,text}) => {
 
                                     <FormControl sx={{m: 3, top:10,  minWidth: 120 }} >
                                         <input type="file" multiple accept ="image/*" onChange={onImageChange} />
-                                        {imageURLs.map(imageSrc => <img src={imageSrc} />)}
-
                                     </FormControl>
+                                    <>
+                                        {checked && catAdded && imgAdded && (
+                                        <FormControl sx={{m: 3, top:10,  minWidth: 120 }} >
+                                            <Button id="submit" variant="contained"  >
+                                                Submit POST.
+                                            </Button>
+                                        </FormControl>
+                                        )}
+                                    </>
 
+                                    <Post title={postTitle} category={category} body={body} img={imageURLs}></Post>
 
                                 </Box>
                             </Box>
