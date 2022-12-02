@@ -6,7 +6,7 @@ const Switch = ({ isOn, handleToggle, onColor }) => {
     <>
       <input checked={isOn} onChange={handleToggle} className="react-switch-checkbox" id={`react-switch-new`} type="checkbox"/>
       <label className="react-switch-label" htmlFor={`react-switch-new`}>
-        <span className={`react-switch-button`} />
+        <span id="switch" className={`react-switch-button`} />
       </label>
     </>
   );

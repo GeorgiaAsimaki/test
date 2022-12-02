@@ -149,7 +149,7 @@ const Thread = ({title,text}) => {
                              <FormControl sx={{m: 3, top:5,  minWidth: 220 }} >
                                <TextField
                                         error
-                                        id="errorTitle"
+                                        id="title"
                                         label="Title"
                                         defaultValue={postTitle}
                                         helperText="Title already exists. Try a different one"
@@ -192,7 +192,7 @@ const Thread = ({title,text}) => {
                                     </FormControl>
 
                                     <FormControl sx={{m: 3, top:10,  minWidth: 20 }} >
-                                        <input type="file" multiple accept ="image/*" onChange={onImageChange} />
+                                        <input id="img" type="file" multiple accept ="image/*" onChange={onImageChange} />
                                     </FormControl>
 
                                         {checked && catAdded && imgAdded && (
