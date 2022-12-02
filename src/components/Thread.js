@@ -124,7 +124,7 @@ const Thread = ({title,text}) => {
 
   return (
     <>
-        <Card sx={{ minWidth: 175 }} variant="outlined" onClick={handlePick}>
+        <Card sx={{ minWidth: 175 }} id="threadCard" variant="outlined" onClick={handlePick}>
           <CardContent >
             <Typography variant="h5" component="div">
               {title}
