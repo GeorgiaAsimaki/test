@@ -53,6 +53,9 @@ const Thread = ({title,text}) => {
 
     const [images,setImages] = React.useState([]);
     const [imageURLs,setImageURLs] = React.useState([]);
+    const [checkedTitle,setCheckedTitle] = React.useState(true);
+
+
 
     React.useEffect(()=>{
         if(images.length<1) return;
@@ -69,9 +72,8 @@ const Thread = ({title,text}) => {
     const handleTitle = async (e) => {
       setPostTitle(e.target.value);
       if(postTitle!=''){
-        const checked = await APIService.post.postTitle(postTitle);
-        console.log(checked);
-        
+        setCheckedTitle(await APIService.post.postTitle(postTitle));
+        console.log(checkedTitle);
       }
 
       setTitleAdded(true);
@@ -136,11 +138,28 @@ const Thread = ({title,text}) => {
            { picked && (
                 <Box sx={{ width: '100%' }}>
                     <Box sx={{ borderTop:2, borderBottom: 2, borderColor: 'divider', bgcolor:'#f5f5f5' }}>
-                        <FormControl sx={{m: 3, top:5,  minWidth: 120 }} >
-                             <TextField id="title" label="Title" variant="outlined" onChange={handleTitle}/>
-                             <FormHelperText>Please define the title of the post.</FormHelperText>
-                        </FormControl>
-                        {titleAdded && (
+                            <>
+                             {checkedTitle && (
+                                <FormControl sx={{m: 3, top:5,  minWidth: 220 }} >
+                                <TextField id="title" label="Title" variant="outlined" defaultValue={postTitle} onChange={handleTitle}/>
+                                <FormHelperText>Please define the title of the post.</FormHelperText>
+                                </FormControl>
+                             )}
+                             {!checkedTitle && (
+                             <FormControl sx={{m: 3, top:5,  minWidth: 220 }} >
+                               <TextField
+                                        error
+                                        id="errorTitle"
+                                        label="Title"
+                                        defaultValue={postTitle}
+                                        helperText="Title already exists. Try a different one"
+                                        onChange={handleTitle}
+                                      />
+                                      </FormControl>
+                             )}
+
+                        </>
+                        {titleAdded && checkedTitle && (
                             <FormControl sx={{m: 3, top:13,  minWidth: 120 }} >
                                 <Button id="create" variant="contained" onClick={addTitle} >
                                     Create POST.
