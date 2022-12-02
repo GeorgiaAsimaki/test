@@ -16,6 +16,7 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
+import APIService from '../APIService';
 
 
 import {Routes, Route, useNavigate} from 'react-router-dom';
@@ -64,6 +65,14 @@ const Thread = ({title,text}) => {
     const onImageChange = (e) => {
         setImages([...e.target.files]);
         setImgAdded(true);
+    }
+    const handleTitle = async (e) => {
+      setPostTitle(e.target.value);
+      if(postTitle!=''){
+        const checked = await APIService.post.postTitle(postTitle);
+        console.log(checked);
+      }
+      
     }
 
 
@@ -129,12 +138,12 @@ const Thread = ({title,text}) => {
                 <Box sx={{ width: '100%' }}>
                     <Box sx={{ borderTop:2, borderBottom: 2, borderColor: 'divider', bgcolor:'#f5f5f5' }}>
                         <FormControl sx={{m: 3, top:5,  minWidth: 120 }} >
-                             <TextField id="title" label="Title" variant="outlined" onChange={handlePostTitle}/>
+                             <TextField id="title" label="Title" variant="outlined" onChange={handleTitle}/>
                              <FormHelperText>Please define the title of the post.</FormHelperText>
                         </FormControl>
                         {titleAdded && (
                             <FormControl sx={{m: 3, top:13,  minWidth: 120 }} >
-                                <Button id="create" variant="contained" onClick={addTitle} >
+                                <Button id="create" variant="contained" onKeyDown={addTitle} >
                                     Create POST.
                                 </Button>
                             </FormControl>
