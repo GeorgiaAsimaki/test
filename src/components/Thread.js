@@ -67,7 +67,9 @@ const Thread = ({title,text}) => {
       if(postTitle!=''){
         const checked = await APIService.post.postTitle(postTitle);
         console.log(checked);
+        
       }
+      setTitleAdded(true);
       
     }
 
@@ -80,10 +82,6 @@ const Thread = ({title,text}) => {
         //navigate('/passenger2');
     }
 
-   const handlePostTitle = (e) => {
-    setPostTitle(e.target.value);
-    setTitleAdded(true);
-   }
 
    const addTitle = () => {
     setCreate(true);
