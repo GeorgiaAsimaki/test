@@ -167,12 +167,12 @@ const Thread = ({title,text}) => {
                                        </Select>
                                     </FormControl>
 
-                                    <FormControl sx={{m: 2, left:50,top:5,  minWidth: 120 }} >
+                                    <FormControl sx={{m: 2,top:5,  minWidth: 120 }} >
                                       <TextField id="body" label="Body" variant="outlined" onChange={handleBody}/>
                                       <FormHelperText>Enter the body of the post.</FormHelperText>
                                     </FormControl>
 
-                                    <FormControl sx={{m: 3, left:70,top:10,  minWidth: 20 }} >
+                                    <FormControl sx={{m: 3, top:10,  minWidth: 20 }} >
                                         <input type="file" multiple accept ="image/*" onChange={onImageChange} />
                                     </FormControl>
 
@@ -186,7 +186,7 @@ const Thread = ({title,text}) => {
                                                     </Button>
                                                 </FormControl>
                                                     {submit && (
-                                                        <FormControl sx={{m: 2, left:50,top:10,  minWidth: 220 }}>
+                                                        <FormControl sx={{m: 2,top:10,  minWidth: 220 }}>
                                                             <Switch isOn={value} handleToggle={() => {setValue(!value);}}/>
                                                             {value && (
                                                                 <FormHelperText>Only for registered users</FormHelperText>
