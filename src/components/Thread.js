@@ -14,6 +14,8 @@ import Select from '@mui/material/Select';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
 
 
 import {Routes, Route, useNavigate} from 'react-router-dom';
@@ -85,16 +87,16 @@ const Thread = ({title,text}) => {
 
 
    const bodyCheck = (e) => {
+
     if (e==='one'){
-        setChecked(false);
         setErrorMessage(true);
     }
     else{
 
-        setChecked(true);
         setErrorMessage(false);
 
     }
+    setChecked(true);
    }
 
     const handleBody = (e) => {
@@ -134,7 +136,7 @@ const Thread = ({title,text}) => {
                     <>
                         {create && (
                             <Box sx={{ width: '100%' }}>
-                                <Box sx={{ borderTop:0, borderBottom: 1, borderColor: 'divider', bgcolor:'#FAF0F2' }}>
+                                <Box sx={{ borderTop:0, borderBottom: 1, borderColor: 'divider', bgcolor:'#DCDCDC	' }}>
                                     <FormControl sx={{m: 2, top:5,  minWidth: 120 }} >
                                        <InputLabel id="demo-simple-select-helper-label">Category</InputLabel>
                                        <Select
@@ -158,15 +160,26 @@ const Thread = ({title,text}) => {
                                     <FormControl sx={{m: 3, top:10,  minWidth: 120 }} >
                                         <input type="file" multiple accept ="image/*" onChange={onImageChange} />
                                     </FormControl>
-                                    <>
+
                                         {checked && catAdded && imgAdded && (
-                                        <FormControl sx={{m: 3, top:10,  minWidth: 120 }} >
-                                            <Button id="submit" variant="contained"  >
-                                                Submit POST.
-                                            </Button>
-                                        </FormControl>
+                                            <>
+                                            {!errorMessage && (
+                                                <FormControl sx={{m: 3, top:10,  minWidth: 120 }} >
+                                                    <Button id="submit" variant="contained"  >
+                                                        Submit POST.
+                                                    </Button>
+                                                </FormControl>
+                                            )}
+                                            {errorMessage && (
+                                                <FormControl sx={{m: 2, top:5,  minWidth: 120 }} >
+                                                <Alert severity="error">
+                                                        <AlertTitle>Error</AlertTitle>
+                                                        Check your post's body, you are not allowed to use the word 'one'.
+                                                </Alert>
+                                                </FormControl>
+                                             )}
+                                             </>
                                         )}
-                                    </>
 
                                     <Post title={postTitle} category={category} body={body} img={imageURLs}></Post>
 
